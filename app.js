@@ -13,17 +13,18 @@ var app = express();
 
 globalEvents = [];
 
+var eventCode = 'AAAAA';
+
 var dummyEvent = {
     "eventName":   "dinner",
     "amount": 153,
     "currency": "EUR",
     "senderAddress": "rwem6KuG47boEXZxzgS1ZryxHk67p1BoLQ",
     "senderNickname": "Franzi",
-    "eventCode": 37
-
+    "eventCode": eventCode
 };
 
-globalEvents['AAAAA'] = dummyEvent;
+globalEvents[eventCode] = dummyEvent;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
