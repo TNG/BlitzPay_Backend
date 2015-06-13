@@ -13,6 +13,18 @@ var app = express();
 
 globalEvents = [];
 
+var dummyEvent = {
+    "eventName":   "dinner",
+    "amount": 153,
+    "currency": "EUR",
+    "senderAddress": "asdfasdfasdfasf",
+    "senderNickname": "Franzi",
+    "eventId": 37
+
+};
+
+globalEvents.push(dummyEvent);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

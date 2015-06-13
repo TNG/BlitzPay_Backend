@@ -15,7 +15,7 @@ router.get('/:id', function (req, res, next) {
             return;
         }
     }
-    res.send("Could not find event wit Id " + req.params.id + " current events: " + resp);
+    res.send(404);
 });
 
 router.post('/', function (req, res, next) {
