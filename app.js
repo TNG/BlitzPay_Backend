@@ -17,7 +17,7 @@ var dummyEvent = {
     "eventName":   "dinner",
     "amount": 153,
     "currency": "EUR",
-    "senderAddress": "asdfasdfasdfasf",
+    "senderAddress": "rwem6KuG47boEXZxzgS1ZryxHk67p1BoLQ",
     "senderNickname": "Franzi",
     "eventId": 37
 
