@@ -22,7 +22,7 @@ router.post('/', function (req, res, next) {
         event.eventCode = makeId();
     }
     globalEvents[event.eventCode] = event;
-    res.json(event);
+    res.status(201).json(event);
 });
 
 router.get('/:id', function (req, res, next) {
