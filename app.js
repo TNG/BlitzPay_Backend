@@ -23,7 +23,7 @@ var dummyEvent = {
 
 };
 
-globalEvents.push(dummyEvent);
+globalEvents['AAAAA'] = dummyEvent;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
