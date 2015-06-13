@@ -17,12 +17,12 @@ router.post('/', function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     var event = req.body;
 
-    event.eventId = makeId();
+    event.eventCode = makeId();
     while (typeof globalEvents[event.id] !== 'undefined') {
-        event.eventId = makeId();
+        event.eventCode = makeId();
     }
-    globalEvents[event.eventId] = event;
-    res.send("New event was created with id: " + event.eventId);
+    globalEvents[event.eventCode] = event;
+    res.json(event);
 });
 
 router.get('/:id', function (req, res, next) {

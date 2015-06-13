@@ -19,7 +19,7 @@ var dummyEvent = {
     "currency": "EUR",
     "senderAddress": "rwem6KuG47boEXZxzgS1ZryxHk67p1BoLQ",
     "senderNickname": "Franzi",
-    "eventId": 37
+    "eventCode": 37
 
 };
 
