@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/:id', function (req, res, next) {
-
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     var resp = "";
     for (var i = 0; i < globalEvents.length; i++) {
         var event = globalEvents[i];
@@ -18,6 +19,8 @@ router.get('/:id', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     var event = req.body;
     event.eventId = globalEvents.length + 38;
     globalEvents.push(event);
