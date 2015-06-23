@@ -1,3 +1,3 @@
 # BlitzPay Backend
 
-See https://github.com/knaufk/beertopeer
+See https://github.com/TNG/BlitzPay_Frontend
