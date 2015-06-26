@@ -5,6 +5,7 @@ var MongoClient = require('mongodb').MongoClient;
 
 var DATABASE_URL = "mongodb://localhost:27017/test";
 var EVENT_COLLECTION = 'event';
+var DUPLICATE_KEY_ERROR = 11000;
 
 function makeId()
 {
@@ -25,18 +26,17 @@ function createAndPersistEvent(req) {
     MongoClient.connect(DATABASE_URL, function (err, db) {
         console.log("Successfully connected to our awesome database, yeah!");
         var collection = db.collection(EVENT_COLLECTION);
-        var item = null;
-        do {
-            collection.findOne({"_id": req.params.id}, function (err, existingItem) {
-                if (existingItem) {
-                    item = existingItem;
-                    id = makeId();
-                    event.eventCode = id;
-                    event._id = eventCode;
+
+        var success = false;
+        collection.insertOne(event, function(err) {
+            if(err) {
+                console.log(err);
+                if(err.code === DUPLICATE_KEY_ERROR) {
+                    console.log('Key ' + event._id + ' already exists in database, generating new key for event.');
+                    createAndPersistEvent(req);
                 }
-            });
-        } while (item);
-        collection.insertOne(event);
+            }
+        });
     });
     return event;
 }
