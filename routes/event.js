@@ -17,41 +17,46 @@ function makeId()
     return text;
 }
 
-router.post('/', function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+function createEventWithUniqueIdFromRequest(req) {
     var event = req.body;
-
     event.eventCode = makeId();
-    MongoClient.connect(DATABASE_URL,function(err, db) {
+    MongoClient.connect(DATABASE_URL, function (err, db) {
         console.log("Successfully connected to our awesome database, yeah!");
         var collection = db.collection(EVENT_COLLECTION);
         var item = null;
         do {
-            collection.findOne({"_id" : req.params.id}, function(err, existingItem){
-                if(existingItem) {
+            collection.findOne({"_id": req.params.id}, function (err, existingItem) {
+                if (existingItem) {
                     item = existingItem;
                     event.eventCode = makeId();
                 }
             });
-        } while(item);
+        } while (item);
     });
-
-    MongoClient.connect(DATABASE_URL,function(err, db) {
+    return event;
+}
+function persistEvent(event) {
+    MongoClient.connect(DATABASE_URL, function (err, db) {
         console.log("Successfully connected to our awesome database, yeah!");
         var collection = db.collection(EVENT_COLLECTION);
         collection.insertOne({
-            '_id' : event.eventCode,
-            'event' : event
+            '_id': event.eventCode,
+            'event': event
         });
     });
+}
+router.post('/', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
+    var event = createEventWithUniqueIdFromRequest(req);
+    persistEvent(event);
     res.status(201).json(event);
 });
 
 router.get('/:id', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-
 
     MongoClient.connect(DATABASE_URL,function(err, db) {
         console.log("Successfully connected to our awesome database, yeah!");
