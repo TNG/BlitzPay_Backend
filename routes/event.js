@@ -17,7 +17,7 @@ function makeId()
     return text;
 }
 
-function createEventWithUniqueIdFromRequest(req) {
+function createAndPersistEvent(req) {
     var event = req.body;
     event.eventCode = makeId();
     MongoClient.connect(DATABASE_URL, function (err, db) {
@@ -32,25 +32,19 @@ function createEventWithUniqueIdFromRequest(req) {
                 }
             });
         } while (item);
-    });
-    return event;
-}
-function persistEvent(event) {
-    MongoClient.connect(DATABASE_URL, function (err, db) {
-        console.log("Successfully connected to our awesome database, yeah!");
-        var collection = db.collection(EVENT_COLLECTION);
         collection.insertOne({
             '_id': event.eventCode,
             'event': event
         });
     });
+    return event;
 }
+
 router.post('/', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
-    var event = createEventWithUniqueIdFromRequest(req);
-    persistEvent(event);
+    var event = createAndPersistEvent(req);
     res.status(201).json(event);
 });
 
