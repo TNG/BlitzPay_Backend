@@ -59,6 +59,10 @@ router.get('/:id', function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
     MongoClient.connect(DATABASE_URL,function(err, db) {
+        if (err) {
+            console.log("Start your database!");
+            return;
+        }
         console.log("Successfully connected to our awesome database, yeah!");
         var collection = db.collection(EVENT_COLLECTION);
         collection.findOne({"_id" : req.params.id}, function(err, item){
