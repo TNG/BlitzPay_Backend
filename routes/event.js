@@ -19,7 +19,9 @@ function makeId()
 
 function createAndPersistEvent(req) {
     var event = req.body;
-    event.eventCode = makeId();
+    var id = makeId();
+    event.eventCode = id;
+    event._id = id;
     MongoClient.connect(DATABASE_URL, function (err, db) {
         console.log("Successfully connected to our awesome database, yeah!");
         var collection = db.collection(EVENT_COLLECTION);
@@ -28,14 +30,13 @@ function createAndPersistEvent(req) {
             collection.findOne({"_id": req.params.id}, function (err, existingItem) {
                 if (existingItem) {
                     item = existingItem;
-                    event.eventCode = makeId();
+                    id = makeId();
+                    event.eventCode = id;
+                    event._id = eventCode;
                 }
             });
         } while (item);
-        collection.insertOne({
-            '_id': event.eventCode,
-            'event': event
-        });
+        collection.insertOne(event);
     });
     return event;
 }
@@ -65,6 +66,7 @@ router.get('/:id', function (req, res, next) {
                 res.send(404);
                 return;
             }
+            delete item._id;
             res.json(item);
         });
     });
