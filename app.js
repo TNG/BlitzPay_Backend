@@ -11,21 +11,6 @@ var event = require('./routes/event');
 
 var app = express();
 
-globalEvents = [];
-
-var eventCode = 'AAAAA';
-
-var dummyEvent = {
-    "eventName":   "dinner",
-    "amount": 153,
-    "currency": "EUR",
-    "senderAddress": "rwem6KuG47boEXZxzgS1ZryxHk67p1BoLQ",
-    "senderNickname": "Franzi",
-    "eventCode": eventCode
-};
-
-globalEvents[eventCode] = dummyEvent;
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
