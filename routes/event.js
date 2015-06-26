@@ -32,7 +32,7 @@ function createAndPersistEvent(req) {
                 console.log(err);
                 if(err.code === DUPLICATE_KEY_ERROR) {
                     console.log('Key ' + event._id + ' already exists in database, generating new key for event.');
-                    createAndPersistEvent(req);
+                    return createAndPersistEvent(req);
                 }
             }
         });
