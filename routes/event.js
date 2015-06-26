@@ -27,7 +27,6 @@ function createAndPersistEvent(req) {
         console.log("Successfully connected to our awesome database, yeah!");
         var collection = db.collection(EVENT_COLLECTION);
 
-        var success = false;
         collection.insertOne(event, function(err) {
             if(err) {
                 console.log(err);
